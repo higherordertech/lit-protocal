@@ -1,19 +1,35 @@
-# Prepare
-```shell
-nvm use
-npm install 
-```
+# Lit Protocol
 
-# AccessControl & Encryption
+## How Does Lit Protocol Work
 
-*Reference: https://developer.litprotocol.com/sdk/access-control/quick-start*
+### [Introduction](https://developer.litprotocol.com/resources/how-it-works#introduction)
 
-## Rules
+Lit Protocol combines cutting-edge cryptography, sealed confidential hardware, and peer-to-peer networking to provide builders in web3 with the ability to use cryptographic keys and perform private compute jobs.
+
+### [Lit Nodes](https://developer.litprotocol.com/resources/how-it-works#1-lit-nodes)
+
+Each Lit Node is a sealed encrypted virtual machine running on an independently operated server. The fact that each node is “sealed” means that neither the operator of the Lit Node, nor any other party, can access the interior of the processor.
+
+Each Lit node contains a JavaScript execution environment (Deno) and key shares. Each key share corresponds to a key pair that is "shared" among all participating operators, created using distributed key generation (DKG).
+
+### [The Lit Network](https://developer.litprotocol.com/resources/how-it-works#2-the-lit-network)
+
+The Lit network is composed of a collection of Lit nodes. All nodes must stake tokens in order to participate in the “active” node operator set, providing crypto-economic security guarantees.
+
+## [AccessControl & Encryption](https://developer.litprotocol.com/sdk/access-control/quick-start)
+
+You can use the Lit network to encrypt your data and store it privately on the open web. This guide will show you how you can encrypt a simple message with Lit, create an Access Control Condition (ACC), and permit decryption by users who meet the condition you set.
+
+### Rules
 
 - The decryption access control conditions must be the same as the encryption.
 - The defined access control conditions must be met.
 
-## Client Encryption Flow
+### Encryption & Decryption Flow Diagram
+
+![Diagram](./lit-protocol.drawio.png)
+
+### Client Encryption Flow
 
 1. Validate Params: https://github.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1416
 2. Validate Access Control Conditions Schema: https://github.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1430
@@ -22,7 +38,7 @@ npm install
 5. Assemble identity parameter: https://github.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1462
 6. Encrypt using public key from server: https://github.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1468
 
-## Client Decryption Flow
+### Client Decryption Flow
 
 1. Validate Params: https://github.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1507
 2. Hashing Access Control Conditions: https://github.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1522
@@ -31,7 +47,7 @@ npm install
 5. Get Network Signature, call API `/web/encryption/sign` with access control conditions to all nodes, and if the success node count is less than the min node count, return an error: https://github.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1564
 6. Decrypt if step 5 is success: https://github.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1556
 
-## Server Encryption Sign Flow
+### Server Encryption Sign Flow
 
 1. Check Condition Count: https://github.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L320
 2. Hash the access control condition: https://github.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L331
@@ -39,7 +55,7 @@ npm install
 4. Check whether user satisfies access control conditions: https://github.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L416
 5. Sign the identity parameter using the blsful secret key share: https://github.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L452
 
-### Example Server Encryption Sign Full Flow With Condition Type: RPC
+#### Example Server Encryption Sign Full Flow With Condition Type: RPC
 
 1. encryption_sign
    - https://github.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L302
@@ -67,7 +83,7 @@ npm install
 10. return signature_share
    - https://github.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L459
 
-## All type of conditions can be implemented in tee-worker
+### All type of conditions can be implemented in tee-worker
 
 - [POAP](https://developer.litprotocol.com/sdk/access-control/evm/poap) is an integration with https://poap.xyz
   - check_condition_via_poap
@@ -110,13 +126,25 @@ npm install
     - https://github.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/access_control/mod.rs#L444
 
 
-## Test
+### Run Test
 
 ```shell
+nvm use
+npm install
 npm run accessControlConditions 
 ```
 
-# Resources
+## [Decentralized Compute](https://developer.litprotocol.com/sdk/serverless-signing/overview)
+
+Blockchains like Ethereum have smart contracts that let developers encode logic to change state. With Lit, you can encode logic that governs signing and encryption.
+
+This logic is encoded using a Lit Action, an immutable JavaScript program that can be "assigned" to the key pairs generated on Lit and used to dictate how they are used.
+
+### [Use `Fetch` in Lit Action Code](https://developer.litprotocol.com/sdk/serverless-signing/fetch)
+
+The HTTP request will be sent out by all the Lit Nodes in parallel, and consensus is based on at least 2/3 of the nodes getting the same response. If less than 2/3 nodes get the same response, then the user can not collect the signature shares above the threshold and therefore cannot produce the final signature. Note that your HTTP request will be sent N times where N is the number of nodes in the Lit Network, because it's sent from every Lit Node in parallel.
+
+## Resources
 
 - Block Explorer: https://chain.litprotocol.com/
 - RPC URL: https://chain-rpc.litprotocol.com/replica-http
