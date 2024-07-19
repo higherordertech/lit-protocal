@@ -62,6 +62,7 @@ const decrypt = async (client: LitNodeClient, wallet: Wallet, accessControlCondi
       accessControlConditions,
       dataToEncryptHash
     );
+  // need use wallet to sign message for decryption
   const sessionForDecryption = await genSession(wallet, client, [
     {
       resource: new LitActionResource("*"),
@@ -73,6 +74,7 @@ const decrypt = async (client: LitNodeClient, wallet: Wallet, accessControlCondi
     },
   ]);
 
+  // call lit-node api to do decryption
   return await decryptToString(
     {
       sessionSigs: sessionForDecryption,
@@ -158,6 +160,9 @@ const main = async () => {
     litNetwork: LitNetwork.Cayenne,
     debug: false,
   });
+  // need connect to lit-node before do encryption/decryption
+  // 1) client need pubkey from lit-node to do encryption
+  // 2) client need call lit-node api to do decryption
   await client.connect();
   const wallet = genWallet();
 

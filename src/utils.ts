@@ -36,6 +36,7 @@ export const genAuthSig = async (
   resources: LitResourceAbilityRequest[]
 ) => {
   let blockHash = await client.getLatestBlockhash();
+  // using resources and latest blockHash from lit-node to create message for wallet sign
   const message = await createSiweMessageWithRecaps({
     walletAddress: wallet.address,
     nonce: blockHash,
@@ -44,6 +45,7 @@ export const genAuthSig = async (
     expiration: ONE_WEEK_FROM_NOW,
     uri,
   });
+  // sign message by wallet
   const authSig = await generateAuthSig({
     signer: wallet,
     toSign: message,
