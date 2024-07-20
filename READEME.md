@@ -10,6 +10,14 @@ Lit Protocol combines cutting-edge cryptography, sealed confidential hardware, a
 
 Each Lit Node is a sealed encrypted virtual machine running on an independently operated server. The fact that each node is “sealed” means that neither the operator of the Lit Node, nor any other party, can access the interior of the processor.
 
+[Sealed and Confidential Hardware](https://developer.litprotocol.com/resources/how-it-works#sealed-and-confidential-hardware)
+
+All Lit node operators run a bare metal install of AMD’s SEV-SNP, ensuring they never have access to any key shares directly, nor the computation processed inside of each node.
+
+Trusted Execution Environment (TEE): SEV-SNP is an example of a TEE, which provides advanced hardware-level isolation for all network operations.
+
+Code Immutability and Confidentiality: Deployed programs within the TEE are immutable and private, preventing unauthorized changes and maintaining consistent operational integrity.
+
 Each Lit node contains a JavaScript execution environment (Deno) and key shares. Each key share corresponds to a key pair that is "shared" among all participating operators, created using distributed key generation (DKG).
 
 ### [The Lit Network](https://developer.litprotocol.com/resources/how-it-works#2-the-lit-network)
