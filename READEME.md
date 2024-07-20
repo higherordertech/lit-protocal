@@ -1,10 +1,21 @@
-# Lit Protocol
+# [Lit Protocol](https://developer.litprotocol.com/resources/how-it-works)
 
 ## How Does Lit Protocol Work
 
 ### [Introduction](https://developer.litprotocol.com/resources/how-it-works#introduction)
 
 Lit Protocol combines cutting-edge cryptography, sealed confidential hardware, and peer-to-peer networking to provide builders in web3 with the ability to use cryptographic keys and perform private compute jobs.
+
+Around key management and private compuation, Lit Protocal can do below:
+
+1. Securely generate and manage non-custodial keys to build user wallets and signers. This enables you to seamlessly onboard users into your application without relying on a centralized custodian or dealing with the complexities of key management.
+Example implementations: PatchWallet, Silk, Collab.Land, Tria, Index Network
+
+2. Perform data encryption and manage access to data with flexible access control rules and policies.
+Example implementations: Fox, Terminal3, Streamr, Cheqd, Lens Protocol, Gitcoin
+
+3. Write and execute private and immutable functions for cross-chain messaging and transaction automation, enabling the development of protocols that have the ability to read and write data between blockchains.
+Example implementations: Event Listener, Yacht Labs SDK
 
 ### [Lit Nodes](https://developer.litprotocol.com/resources/how-it-works#1-lit-nodes)
 
@@ -27,6 +38,14 @@ The Lit network is composed of a collection of Lit nodes. All nodes must stake t
 ## [AccessControl & Encryption](https://developer.litprotocol.com/sdk/access-control/quick-start)
 
 You can use the Lit network to encrypt your data and store it privately on the open web. This guide will show you how you can encrypt a simple message with Lit, create an Access Control Condition (ACC), and permit decryption by users who meet the condition you set.
+
+Encryption and Access Control Summery:
+
+1 client encrypts raw data and get an encrypted data that can be shared to anyone
+This step encrypts, the raw data and different decryption check condition, in json format (playground: https://lit-share-modal-v3-playground.netlify.app/) that will be executed/enforce in step 2.
+
+2 client decrypt the encrypted data using the password returned from calling server encryption flow (where the check condition defined in json will be executed and enforced)
+
 
 ### Rules
 
@@ -139,7 +158,7 @@ You can use the Lit network to encrypt your data and store it privately on the o
 ```shell
 nvm use
 npm install
-npm run accessControlConditions 
+npm run dev 
 ```
 
 ## [Decentralized Compute](https://developer.litprotocol.com/sdk/serverless-signing/overview)

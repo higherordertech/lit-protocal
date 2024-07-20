@@ -14,7 +14,7 @@ import { AccessControlConditions } from "@lit-protocol/types";
 import { Wallet } from "ethers";
 
 const chain = "ethereum";
-const dataToEncrypt = "this is data need be encrypt";
+const dataToEncrypt = "this is data need be encrypted";
 
 const accessControlConditions1 = [
   {
@@ -97,6 +97,7 @@ const case1 = async (client: LitNodeClient, wallet: Wallet) => {
     },
     client,
   );
+  console.log({ ciphertext, dataToEncryptHash })
   const decryptResponse = await decrypt(client, wallet, accessControlConditions1, dataToEncryptHash, ciphertext);
   console.log("case1, decrypt response: ", decryptResponse);
   console.log("-------------------------------------------------------------------------------------------------------");
@@ -112,6 +113,7 @@ const case2 = async (client: LitNodeClient, wallet: Wallet) => {
     },
     client,
   );
+  console.log({ ciphertext, dataToEncryptHash })
   const decryptResponse = await decrypt(client, wallet, accessControlConditions2, dataToEncryptHash, ciphertext);
   console.log("case2, decrypt response: ", decryptResponse);
   console.log("-------------------------------------------------------------------------------------------------------");
@@ -127,6 +129,7 @@ const case3 = async (client: LitNodeClient, wallet: Wallet) => {
     },
     client,
   );
+  console.log({ ciphertext, dataToEncryptHash })
   try {
     const decryptResponse = await decrypt(client, wallet, accessControlConditions3, dataToEncryptHash, ciphertext);
     console.log("case3, decrypt response: ", decryptResponse);
@@ -146,6 +149,7 @@ const case4 = async (client: LitNodeClient, wallet: Wallet) => {
     },
     client,
   );
+  console.log({ ciphertext, dataToEncryptHash })
   try {
     const decryptResponse = await decrypt(client, wallet, accessControlConditions2, dataToEncryptHash, ciphertext);
     console.log("case4, decrypt response: ", decryptResponse);
