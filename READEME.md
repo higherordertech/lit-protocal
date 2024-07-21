@@ -91,7 +91,7 @@ You can use the Lit network to encrypt your data and store it privately on the o
 Encryption and Access Control Summery:
 
 1 client encrypts raw data and get an encrypted data that can be shared to anyone
-This step encrypts, the raw data and different decryption check condition, in json format (playground: https://lit-share-modal-v3-playground.netlify.app/) that will be executed/enforce in step 2.
+This step encrypts, the raw data and different decryption check condition, in json format (can use this playground to build the check condition json: https://lit-share-modal-v3-playground.netlify.app/) that will be executed/enforce in step 2.
 
 2 client decrypt the encrypted data using the password returned from calling server encryption flow (where the check condition defined in json will be executed and enforced)
 
@@ -121,15 +121,16 @@ This step encrypts, the raw data and different decryption check condition, in js
 3. Formatting Access Control Conditions: https://github1s.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1539
 4. Assemble identity parameter: https://github1s.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1556
 5. Get Network Signature, call API `/web/encryption/sign` with access control conditions to all nodes, and if the success node count is less than the min node count, return an error: https://github1s.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1564
-6. Decrypt if step 5 is success: https://github1s.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1556
+6. Decrypt data using signature returned from lit-node API `/web/encryption/sign` and pubKey, if step 5 is success: https://github1s.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1556
 
-### Server Encryption Sign Flow
+### Server Encryption Sign Flow, Endpoint Is: `/web/encryption/sign`
 
 1. Check Condition Count: https://github1s.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L320
 2. Hash the access control condition: https://github1s.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L331
 3. Validate auth sig item: https://github1s.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L351
 4. Check whether user satisfies access control conditions: https://github1s.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L416
 5. Sign the identity parameter using the blsful secret key share: https://github1s.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L452
+6. Return the signature_share to client, https://github1s.com/LIT-Protocol/Node/blob/HEAD/rust/lit-node/src/endpoints/web_client.rs#L463
 
 #### Example Server Encryption Sign Full Flow With Condition Type: RPC
 
