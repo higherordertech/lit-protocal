@@ -18,6 +18,21 @@ Example implementations: Fox, Terminal3, Streamr, Cheqd, Lens Protocol, Gitcoin
 Example implementations: Event Listener, Yacht Labs SDK
 
 overview: https://messari.io/report/understanding-lit-protocol-a-comprehensive-overview
+
+Lit Architecture
+Chronicle
+Chronicle is an EVM-compatible rollup, launched as an Arbitrum Orbit chain, that settles on Ethereum. Though Lit is not a blockchain, it uses this rollup primarily to coordinate its node set, manage permissions for PKPs, and act as a persistent layer for shared state among nodes. Once LITKEY launches, Lit nodes will stake the token to determine their inclusion in the active validator set, which is refreshed every epoch. PKPs are represented as ERC-721 tokens (NFTs) on Chronicle. The permissions associated with PKPs are also onchain and used to verify signature requests by end users.
+
+Chronicle is also used for metering usage and can support unique signature verification schemes that Ethereum’s EVM cannot. Users load LITKEY tokens into a contract, and their balance is deducted as they use the Lit network. Regarding signature verification support, Boneh–Lynn–Shacham (BLS) aggregation signatures can be verified onchain, lowering verification costs.
+
+Chronicle adds an additional security assumption to Lit at the rollup sequencing layer. Currently, the Chronicle sequencer is centrally operated by Conduit, the rollup deployer team. However, Lit requires Lit nodes to also run Chronicle nodes to maintain high performance when syncing onchain and offchain operations. At the same time, Chronicle also benefits through the added redundancy and sequencer accountability. Because Lit nodes run a replicate of the chain, Lit nodes would know and immediately reject any invalid state transitions if Conduit were to act maliciously.
+
+Lit Nodes
+Each Lit node operates a sealed encrypted virtual machine. The term "sealed" implies that neither the operator, data center owner, nor any other party can access the interior of the processor. Each node includes a JavaScript execution environment and holds key shares. These nodes collectively form the Lit Network, which ensures data authenticity by requiring nodes to verify the seal of their peers through cryptographic proofs. This process ensures that all nodes in the network are genuine, sealed, and encrypted virtual machines.
+
+The Lit Network operates using a distributed key management system where each node holds independent key shares of threshold key pairs. These threshold keys are created through distributed key generation. To perform operations with these keys, such as signing requests, at least two-thirds of the network nodes must participate. Each node must compute an authorization within its sealed environment, ensuring that no single node can compromise the system, thus maintaining a high level of security and trust within the network.
+
+
 good architecture diagram: https://spark.litprotocol.com/lit-protocol-a-primer/
 
 
