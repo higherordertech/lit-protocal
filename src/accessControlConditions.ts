@@ -168,6 +168,8 @@ const main = async () => {
   // 1) client need pubkey from lit-node to do encryption
   // 2) client need call lit-node api to do decryption
   await client.connect();
+  console.log('Connected Nodes>>\n', Array.from(client.connectedNodes).join('\n'));
+
   const wallet = genWallet();
 
   // decrypt success because current block number > 0
