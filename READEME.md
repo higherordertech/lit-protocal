@@ -93,7 +93,7 @@ Encryption and Access Control Summery:
 1 client encrypts raw data and get an encrypted data that can be shared to anyone
 This step encrypts, the raw data and different decryption check condition, in json format (can use this playground to build the check condition json: https://lit-share-modal-v3-playground.netlify.app/) that will be executed/enforce in step 2.
 
-2 client decrypt the encrypted data using the password returned from calling server encryption flow (where the check condition defined in json will be executed and enforced)
+2 client decrypt the encrypted data using the password returned from calling server encryption flow (where the check condition defined in json will be executed and enforced). client sdk will send the requests to all lit nodes and wait for threshold set of nodes response: https://github1s.com/LIT-Protocol/js-sdk/blob/master/packages/lit-node-client-nodejs/src/lib/lit-node-client-nodejs.ts#L1598-L1602
 
 
 ### Rules
